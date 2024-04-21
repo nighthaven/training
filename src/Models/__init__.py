@@ -3,13 +3,19 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import os
 
-SQLALCHEMY_DATABASE_URL = "sqlite:///./Product.db" if 'TEST' in  os.environ else "sqlite:///./nom_de_la_database.db"
+
+SQLALCHEMY_DATABASE_URL = "sqlite:///./Heroes.db" if 'TEST' in os.environ else "sqlite:///./Heroes.db"
+
+
+def install_models() -> None:
+    import src.Models.characters_models
+
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={
-    "check_same_thread":False
+    "check_same_thread": False
 })
 
-SessionLocal = sessionmaker(bind=engine,autocommit=False, autoflush=False)
+SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)
 Base = declarative_base()
 
 def get_db():
